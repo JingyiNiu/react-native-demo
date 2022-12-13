@@ -42,4 +42,8 @@ const styles = StyleSheet.create({
     listContainer: {
         flex: 5,
     },
+    listTitle: {
+        fontSize: 24,
+        fontWeight: "800",
+    },
 });

@@ -2,30 +2,29 @@ import React from "react";
 import { StyleSheet, View, Text, Pressable } from "react-native";
 
 const TodoItem = ({ todo, onItemDelete } = props) => {
-    
     return (
-        <Pressable onPress={()=>onItemDelete(todo.item.id)}>
-            <View style={styles.listItem}>
+        <View style={styles.listItem}>
+            <Pressable android_ripple={{ color: "#ccc" }} style={({ pressed }) => pressed && styles.onPressStyle} onPress={() => onItemDelete(todo.item.id)}>
                 <Text style={styles.listText}>{todo.item.text}</Text>
-            </View>
-        </Pressable>
+            </Pressable>
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
-    listTitle: {
-        fontSize: 24,
-        fontWeight: "800",
-    },
     listItem: {
         margin: 8,
-        paddingHorizontal: 8,
-        paddingVertical: 16,
         borderRadius: 4,
         backgroundColor: "orange",
     },
     listText: {
+        paddingHorizontal: 8,
+        paddingVertical: 16,
         color: "#fff",
+    },
+    onPressStyle: {
+        backgroundColor: "salmon",
+        borderRadius: 4,
     },
 });
 
