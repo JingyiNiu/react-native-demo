@@ -1,31 +1,40 @@
 import { useState } from "react";
-import { StyleSheet, View, FlatList, Text } from "react-native";
+import { StyleSheet, View, FlatList, Text, Button } from "react-native";
 import TodoInput from "./components/todoInput";
 import TodoItem from "./components/todoItem";
 
 export default function App() {
     const [todoList, setTodoList] = useState([]);
+    const [IsInputVisible, setIsInputVisible] = useState(false);
 
-    const handleSubmit = (input) => {
+    const handleSubmitTodo = (input) => {
         setTodoList([...todoList, { id: Math.random().toString(), text: input }]);
-        // setInput("");
+        setIsInputVisible(false)
     };
 
-    const handleDelete = (id) => {
-        // console.log("delete", id);
+    const handleDeleteTodo = (id) => {
         setTodoList((todoList) => todoList.filter((todo) => todo.id !== id));
+    };
+
+    const handleShowInput = () => {
+        setIsInputVisible(true);
+    };
+
+    const handleCancelInput = () => {
+        setIsInputVisible(false);
     };
 
     return (
         <View style={styles.appContainer}>
-            <TodoInput onTodoSubmit={handleSubmit} />
+            <Button title="Add new todo" color="salmon" onPress={handleShowInput} />
+            {IsInputVisible && <TodoInput onTodoSubmit={handleSubmitTodo} visible={IsInputVisible} closeInput={handleCancelInput} />}
             <View style={styles.listContainer}>
                 <Text style={styles.listTitle}>Todo List</Text>
                 <FlatList
                     data={todoList}
                     keyExtractor={(item) => item.id}
                     renderItem={(todo) => {
-                        return <TodoItem todo={todo} onItemDelete={handleDelete} />;
+                        return <TodoItem todo={todo} onItemDelete={handleDeleteTodo} />;
                     }}
                 ></FlatList>
             </View>
@@ -35,9 +44,9 @@ export default function App() {
 
 const styles = StyleSheet.create({
     appContainer: {
-        paddingHorizontal: 16,
-        paddingTop: 48,
         flex: 1,
+        paddingTop: 48,
+        paddingHorizontal: 16,
     },
     listContainer: {
         flex: 5,
