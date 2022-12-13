@@ -11,6 +11,11 @@ export default function App() {
         // setInput("");
     };
 
+    const handleDelete = (id) => {
+        // console.log("delete", id);
+        setTodoList((todoList) => todoList.filter((todo) => todo.id !== id));
+    };
+
     return (
         <View style={styles.appContainer}>
             <TodoInput onTodoSubmit={handleSubmit} />
@@ -18,9 +23,9 @@ export default function App() {
                 <Text style={styles.listTitle}>Todo List</Text>
                 <FlatList
                     data={todoList}
-                    keyExtractor={(item, index) => item.id}
+                    keyExtractor={(item) => item.id}
                     renderItem={(todo) => {
-                        return <TodoItem todo={todo} />;
+                        return <TodoItem todo={todo} onItemDelete={handleDelete} />;
                     }}
                 ></FlatList>
             </View>
