@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { StyleSheet, View, FlatList, Text, Button } from "react-native";
+import { StatusBar } from "expo-status-bar";
 import TodoInput from "./components/todoInput";
 import TodoItem from "./components/todoItem";
 
@@ -9,7 +10,7 @@ export default function App() {
 
     const handleSubmitTodo = (input) => {
         setTodoList([...todoList, { id: Math.random().toString(), text: input }]);
-        setIsInputVisible(false)
+        setIsInputVisible(false);
     };
 
     const handleDeleteTodo = (id) => {
@@ -25,20 +26,23 @@ export default function App() {
     };
 
     return (
-        <View style={styles.appContainer}>
-            <Button title="Add new todo" color="salmon" onPress={handleShowInput} />
-            {IsInputVisible && <TodoInput onTodoSubmit={handleSubmitTodo} visible={IsInputVisible} closeInput={handleCancelInput} />}
-            <View style={styles.listContainer}>
-                <Text style={styles.listTitle}>Todo List</Text>
-                <FlatList
-                    data={todoList}
-                    keyExtractor={(item) => item.id}
-                    renderItem={(todo) => {
-                        return <TodoItem todo={todo} onItemDelete={handleDeleteTodo} />;
-                    }}
-                ></FlatList>
+        <>
+            <StatusBar />
+            <View style={styles.appContainer}>
+                <Button title="Add new todo" color="salmon" onPress={handleShowInput} />
+                {IsInputVisible && <TodoInput onTodoSubmit={handleSubmitTodo} visible={IsInputVisible} closeInput={handleCancelInput} />}
+                <View style={styles.listContainer}>
+                    <Text style={styles.listTitle}>Todo List</Text>
+                    <FlatList
+                        data={todoList}
+                        keyExtractor={(item) => item.id}
+                        renderItem={(todo) => {
+                            return <TodoItem todo={todo} onItemDelete={handleDeleteTodo} />;
+                        }}
+                    ></FlatList>
+                </View>
             </View>
-        </View>
+        </>
     );
 }
 
@@ -54,5 +58,6 @@ const styles = StyleSheet.create({
     listTitle: {
         fontSize: 24,
         fontWeight: "800",
+        color:"#fff"
     },
 });
